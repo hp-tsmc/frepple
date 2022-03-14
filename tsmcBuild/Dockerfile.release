@@ -20,3 +20,4 @@ RUN dpkg -i --force-all /frepple/build/*.deb && \
   apt-get clean && \
   rm -rf /frepple *.deb /var/lib/apt/lists/* /etc/apt/sources.list.d/pgdg.list
 
+VOLUME ["/var/log/frepple", "/etc/frepple", "/var/log/apache2", "/etc/apache2"]
