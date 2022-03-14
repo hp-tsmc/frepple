@@ -28,8 +28,8 @@ RUN apt-get -y -q update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
   libxerces-c3.2 libxerces-c-dev python3-lxml \
   openssl libssl-dev libpq5 libpq-dev locales
 
-COPY requirements.dev.txt /
-COPY requirements.txt /
+COPY frepple/requirements.dev.txt /
+COPY frepple/requirements.txt /
 
 RUN python3 -m pip install --upgrade pip && \
   python3 -m pip install -r requirements.dev.txt
@@ -67,7 +67,7 @@ RUN apt-get -y -q update && \
   python3-setuptools python3-wheel build-essential python3-dev python3-psycopg2 \
   libpq5 openssl python3-lxml libapache2-mod-xsendfile ssl-cert locales
 
-COPY requirements.txt /
+COPY frepple/requirements.txt /
 
 RUN python3 -m pip install --upgrade pip && \
   python3 -m pip install -r requirements.txt && \
@@ -86,6 +86,8 @@ RUN dpkg -i *.deb && \
   apt-get clean && \
   rm -rf *.deb /var/lib/apt/lists/* /etc/apt/sources.list.d/pgdg.list
 
+RUN ls -lh /etc/apache2/sites-available
+
 EXPOSE 80
 
 # Use the following lines to enable HTTPS. 
@@ -97,5 +99,5 @@ EXPOSE 80
 
 VOLUME ["/var/log/frepple", "/etc/frepple", "/var/log/apache2", "/etc/apache2"]
 
-COPY entrypoint.sh /
+COPY frepple/contrib/docker/entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]

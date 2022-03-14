@@ -58,7 +58,7 @@ EXPOSE 80
 #   a2ensite default-ssl && \
 # EXPOSE 443
 
-VOLUME ["/var/log/frepple", "/etc/frepple", "/var/log/apache2", "/etc/apache2"]
+# VOLUME ["/var/log/frepple", "/etc/frepple", "/var/log/apache2", "/etc/apache2"]
 
 COPY frepple/tsmcBuild/entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]

@@ -3,6 +3,7 @@ version: "3"
 services:
 
   frepple:
+    # image: "ghcr.io/frepple/frepple-community:latest"
     image: "frepple:test"
     container_name: frepplewebserver
     ports:
