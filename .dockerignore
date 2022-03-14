@@ -1,7 +1,6 @@
 .github/
 .vscode/
 bin/
-tsmcBuild/
 test/
 doc/
 contrib/
