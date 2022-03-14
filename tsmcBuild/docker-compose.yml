@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+
+  frepple:
+    image: "frepple:test"
+    container_name: frepplewebserver
+    ports:
+      - 9000:80
+    depends_on:
+      - frepplepostgres
+    networks:
+      - backend
+    volumes:
+      - log-apache:/var/log/apache2
+      - log-frepple:/var/log/frepple
+      - config-frepple:/etc/frepple
+    environment:
+      POSTGRES_HOST: frepplepostgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: frepple
+      POSTGRES_PASSWORD: frepple
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4096M
+        reservations:
+          cpus: '0.25'
+          memory: 4096M 
+
+  frepplepostgres:
+    image: "postgres:13"
+    container_name: frepplepostgres
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4096M
+        reservations:
+          cpus: '0.25'
+          memory: 4096M    
+    # Tuning postgres configuration according to https://pgtune.leopard.in.ua/
+    # Adapt to match your allocated resources.
+    # command: postgres -c ...   TODO
+    networks:
+      - backend
+    environment:
+      POSTGRES_PASSWORD: frepple
+      POSTGRES_DB: frepple
+      POSTGRES_USER: frepple
+
+volumes:
+  log-apache:
+  log-frepple:
+  config-frepple:
+
+networks:
+  backend:
